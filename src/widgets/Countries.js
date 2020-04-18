@@ -1,9 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import Country from './Country';
+import FilterResults from 'react-filter-search';
 
 function Countries() {
   const [data, setData] = useState([]);
+  const [value, setValue] = useState('');
 
   useEffect(() => {
     let ignore = false;
@@ -14,32 +16,42 @@ function Countries() {
     }
 
     fetchData();
+
     return () => {
       ignore = true;
     };
   }, []);
 
   return (
-    <div style={{ textAlign: 'left', margin: '3em' }}>
-      {/* <div style={{ marginLeft: '2.5em' }}>
+    <div style={{ margin: '3em' }}>
+      <div className="country-search">
         <input
-          value={query}
-          placeholder="Search country name.."
-          onChange={e => setQuery(e.target.value)}
+          type="text"
+          value={value}
+          placeholder="Search.."
+          onChange={e => setValue(e.target.value)}
         />
-      </div> */}
-      <div className="container">
-        {data.map(item => (
-          <div key={item.name}>
-            <Country
-              name={item.name}
-              capital={item.capital}
-              flag={item.flag}
-              population={item.population}
-              nativeName={item.nativeName}
-            />
-          </div>
-        ))}
+      </div>
+      <div>
+        <FilterResults
+          value={value}
+          data={data}
+          renderResults={data => (
+            <div className="container">
+              {data.map(item => (
+                <div key={item.name}>
+                  <Country
+                    name={item.name}
+                    capital={item.capital}
+                    flag={item.flag}
+                    population={item.population}
+                    nativeName={item.nativeName}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
+        />
       </div>
     </div>
   );

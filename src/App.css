@@ -25,7 +25,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  /* background-color: antiquewhite; */
+  background-color: antiquewhite;
 }
 
 .flex-container > div {
@@ -44,4 +44,14 @@
   margin-top: 5%;
   width: 8em;
   height: 5em;
+}
+
+.country-search {
+  text-align: center;
+  margin: 1%;
+  padding: 1%;
+}
+
+input {
+  font-size: 1em;
 }
