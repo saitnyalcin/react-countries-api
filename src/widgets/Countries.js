@@ -4,7 +4,6 @@ import Country from './Country';
 
 function Countries() {
   const [data, setData] = useState([]);
-  const [query, setQuery] = useState('');
 
   useEffect(() => {
     let ignore = false;
@@ -18,7 +17,7 @@ function Countries() {
     return () => {
       ignore = true;
     };
-  });
+  }, []);
 
   return (
     <div style={{ textAlign: 'left', margin: '3em' }}>
