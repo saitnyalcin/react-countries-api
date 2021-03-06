@@ -1,44 +1,47 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import Country from './Country';
-import FilterResults from 'react-filter-search';
+import React, { useEffect, useState } from "react";
+import FilterResults from "react-filter-search";
+import Country from "./Country";
 
 function Countries() {
   const [data, setData] = useState([]);
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState("");
 
   useEffect(() => {
-    let ignore = false;
-
     async function fetchData() {
-      const result = await axios(`https://restcountries.eu/rest/v2/`);
-      if (!ignore) setData(result.data);
+      await fetch("https://restcountries.eu/rest/v2/")
+        .then((response) => response.json())
+        .then((data) => setData(data))
+        .then((result) => {
+          console.log("Success:", result);
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
     }
 
     fetchData();
-
-    return () => {
-      ignore = true;
-    };
   }, []);
 
   return (
-    <div style={{ margin: '3em' }}>
+    <div style={{ margin: "3em" }}>
+      <div>
+        <span>{data.length} countries found</span>
+      </div>
       <div className="country-search">
         <input
           type="text"
           value={value}
           placeholder="Search.."
-          onChange={e => setValue(e.target.value)}
+          onChange={(e) => setValue(e.target.value)}
         />
       </div>
       <div>
         <FilterResults
           value={value}
           data={data}
-          renderResults={data => (
+          renderResults={(data) => (
             <div className="container">
-              {data.map(item => (
+              {data.map((item) => (
                 <div key={item.name}>
                   <Country
                     name={item.name}
